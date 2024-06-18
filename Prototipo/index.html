@@ -13,6 +13,7 @@
     <nav>
         <button onclick="showSection('usuarios')">Usuários</button>
         <button onclick="showSection('clientes')">Clientes</button>
+        <button onclick="showSection('exercicios')">Exercícios</button>
     </nav>
     <main>
         <section id="usuarios" class="hidden">
@@ -112,6 +113,65 @@
                 <div id="resultadoConsultaCliente"></div>
             </div>
         </section>
+        <section id="exercicios" class="hidden">
+            <h2>Gerenciamento de Exercícios</h2>
+            <button onclick="showForm('formInserirExercicio')">Inserir Exercício</button>
+            <button onclick="showForm('formConsultarExercicio')">Consultar Exercício</button>
+            <div id="formInserirExercicio" class="form-container hidden">
+                <h3>Inserir Exercício</h3>
+                <form id="inserirExercicioForm" onsubmit="inserirExercicio(); return false;">
+                    <label for="nomeExercicio">Nome:</label>
+                    <input type="text" id="nomeExercicio" name="nome" required>
+                    <label for="descricaoExercicio">Descrição:</label>
+                    <textarea id="descricaoExercicio" name="descricao" required></textarea>
+                    <label for="efeitoExercicio">Efeito:</label>
+                    <select id="efeitoExercicio" name="efeito" multiple required>
+                        <option value="Costas">Costas</option>
+                        <option value="Bíceps">Bíceps</option>
+                        <option value="Tríceps">Tríceps</option>
+                        <option value="Ombro">Ombro</option>
+                        <option value="Panturrilha">Panturrilha</option>
+                        <option value="Quadril">Quadril</option>
+                        <option value="Quadríceps">Quadríceps</option>
+                    </select>
+                    <label for="nivelExercicio">Nível:</label>
+                    <select id="nivelExercicio" name="nivel" required>
+                        <option value="Iniciante">Iniciante</option>
+                        <option value="Intermediário">Intermediário</option>
+                        <option value="Avançado">Avançado</option>
+                    </select>
+                    <button type="submit">Inserir</button>
+                </form>
+            </div>
+            <div id="formConsultarExercicio" class="form-container hidden">
+                <h3>Consultar Exercício</h3>
+                <form id="consultarExercicioForm">
+                    <label for="consultaNomeExercicio">Nome:</label>
+                    <input type="text" id="consultaNomeExercicio" name="nome">
+                    <label for="consultaEfeitoExercicio">Efeito:</label>
+                    <select id="consultaEfeitoExercicio" name="efeito" multiple>
+                        <option value="">Todos</option>
+                        <option value="Costas">Costas</option>
+                        <option value="Bíceps">Bíceps</option>
+                        <option value="Tríceps">Tríceps</option>
+                        <option value="Ombro">Ombro</option>
+                        <option value="Panturrilha">Panturrilha</option>
+                        <option value="Quadril">Quadril</option>
+                        <option value="Quadríceps">Quadríceps</option>
+                    </select>
+                    <label for="consultaNivelExercicio">Nível:</label>
+                    <select id="consultaNivelExercicio" name="nivel">
+                        <option value="">Todos</option>
+                        <option value="Iniciante">Iniciante</option>
+                        <option value="Intermediário">Intermediário</option>
+                        <option value="Avançado">Avançado</option>
+                    </select>
+                    <button type="button" onclick="consultarExercicio()">Consultar</button>
+                </form>
+                <div id="resultadoConsultaExercicio"></div>
+            </div>
+        </section>
+    </main>
     </main>
     <script src="scripts.js"></script>
 </body>
