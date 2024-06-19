@@ -49,8 +49,6 @@ def test_consultar_usuario():
         print(f"Erro ao encontrar o campo de consulta de usuário: {e}")
         driver.quit()
         return
-
-    consulta_nome_usuario.send_keys("Teste Usuário")
     
     # Depuração: Verificar se o botão de consulta está presente
     try:
@@ -80,10 +78,88 @@ def test_consultar_usuario():
             else:
                 print("Sucesso: Detalhes do usuário estão visíveis.")
                 time.sleep(2)
+
+            # Editar o usuário
+            try:
+                botao_editar = detalhes_usuario.find_element(By.XPATH, ".//button[contains(text(), 'Editar')]")
+                botao_editar.click()
+                time.sleep(1)
+                # Interagir com os prompts (deve-se modificar para sua automação específica de prompts)
+                driver.switch_to.alert.send_keys("Teste Editar")
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.send_keys("Administrador")
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.send_keys("Teste Senha Nova")
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                print("Sucesso: Usuário editado.")
+
+            except Exception as e:
+                print(f"Erro ao editar o usuário: {e}")
         else:
             print("Nenhum usuário encontrado na consulta.")
     except Exception as e:
-        print(f"Erro ao interagir com os resultados da consulta de usuário: {e}")
+        print(f"ERRO -1")
+
+    #Pesquisar novamente o usuário editado
+    # Depuração: Verificar se o campo de consulta está presente
+    try:
+        consulta_nome_usuario = driver.find_element(By.ID, "consultaNomeUsuario")
+    except Exception as e:
+        print(f"ERRO 0{e}")
+        driver.quit()
+        return
+    
+    # Depuração: Verificar se o botão de consulta está presente
+    try:
+        botao_consultar = driver.find_element(By.XPATH, "//button[@onclick=\"consultarUsuario()\"]")
+    except Exception as e:
+        print(f"ERRO 1")
+        driver.quit()
+        return
+    
+    botao_consultar.click()
+    time.sleep(1)
+
+    resultado_consulta = driver.find_element(By.ID, "resultadoConsultaUsuario")
+    usuarios_encontrados = resultado_consulta.find_elements(By.CLASS_NAME, "expandable")
+    
+    if usuarios_encontrados:
+        # Clicar no primeiro usuário encontrado para expandir os detalhes
+        usuarios_encontrados[0].click()
+        time.sleep(2)
+
+    # Remover o usuário
+    try:
+        # Re-localizar o botão de remoção para evitar "stale element reference"
+        botao_remover = driver.find_element(By.XPATH, "//div[@id='usuario0']//button[contains(text(), 'Remover')]")
+        botao_remover.click()
+        time.sleep(1)
+        print("Sucesso: Usuário removido.")
+    except Exception as e:
+        print(f"Erro ao remover o usuário: {e}")
+
+    #Pesquisar novamente o usuário Removido
+    # Depuração: Verificar se o campo de consulta está presente
+    try:
+        consulta_nome_usuario = driver.find_element(By.ID, "consultaNomeUsuario")
+    except Exception as e:
+        print(f"Erro ao encontrar o campo de consulta de usuário: {e}")
+        driver.quit()
+        return
+    
+    # Depuração: Verificar se o botão de consulta está presente
+    try:
+        botao_consultar = driver.find_element(By.XPATH, "//button[@onclick=\"consultarUsuario()\"]")
+    except Exception as e:
+        print(f"Erro ao encontrar o botão de consulta de usuário: {e}")
+        driver.quit()
+        return
+    
+    botao_consultar.click()
+    time.sleep(3)
 
 def test_inserir_cliente():
     driver.find_element(By.XPATH, "//button[@onclick=\"showSection('clientes')\"]").click()
@@ -120,8 +196,6 @@ def test_consultar_cliente():
         print(f"Erro ao encontrar o campo de consulta de cliente: {e}")
         driver.quit()
         return
-
-    consulta_nome_cliente.send_keys("Teste Cliente")
     
     # Depuração: Verificar se o botão de consulta está presente
     try:
@@ -151,10 +225,94 @@ def test_consultar_cliente():
             else:
                 print("Sucesso: Detalhes do cliente estão visíveis.")
                 time.sleep(2)
+
+                # Editar o cliente
+                try:
+                    botao_editar = detalhes_cliente.find_element(By.XPATH, ".//button[contains(text(), 'Editar')]")
+                    botao_editar.click()
+                    time.sleep(1)
+                    # Interagir com os prompts (deve-se modificar para sua automação específica de prompts)
+                    driver.switch_to.alert.send_keys("Teste Editar Nome Cliente")
+                    driver.switch_to.alert.accept()
+                    time.sleep(1)
+                    driver.switch_to.alert.accept()
+                    time.sleep(1)
+                    driver.switch_to.alert.accept()
+                    time.sleep(1)
+                    driver.switch_to.alert.accept()
+                    time.sleep(1)
+                    driver.switch_to.alert.accept()
+                    time.sleep(1)
+                    driver.switch_to.alert.accept()
+                    time.sleep(1)
+                    driver.switch_to.alert.accept()
+                    time.sleep(1)
+                    print("Sucesso: cliente editado.")
+
+                except Exception as e:
+                    print(f"Erro ao editar o cliente: {e}")
         else:
             print("Nenhum cliente encontrado na consulta.")
     except Exception as e:
-        print(f"Erro ao interagir com os resultados da consulta de cliente: {e}")
+        print(f"ERRO -1")
+
+    #Pesquisar novamente o cliente editado
+    # Depuração: Verificar se o campo de consulta está presente
+    try:
+        consulta_nome_cliente = driver.find_element(By.ID, "consultaNomeCliente")
+    except Exception as e:
+        print(f"ERRO 0")
+        driver.quit()
+        return
+    
+    # Depuração: Verificar se o botão de consulta está presente
+    try:
+        botao_consultar = driver.find_element(By.XPATH, "//button[@onclick=\"consultarCliente()\"]")
+    except Exception as e:
+        print(f"ERRO 1")
+        driver.quit()
+        return
+    
+    botao_consultar.click()
+    time.sleep(1)
+
+    resultado_consulta = driver.find_element(By.ID, "resultadoConsultaCliente")
+    clientes_encontrados = resultado_consulta.find_elements(By.CLASS_NAME, "expandable")
+    
+    if clientes_encontrados:
+        # Clicar no primeiro cliente encontrado para expandir os detalhes
+        clientes_encontrados[0].click()
+        time.sleep(2)
+
+    # Remover o cliente
+    try:
+        # Re-localizar o botão de remoção para evitar "stale element reference"
+        botao_remover = driver.find_element(By.XPATH, "//div[@id='cliente0']//button[contains(text(), 'Remover')]")
+        botao_remover.click()
+        time.sleep(1)
+        print("Sucesso: cliente removido.")
+    except Exception as e:
+        print(f"Erro ao remover o cliente: {e}")
+
+    #Pesquisar novamente o cliente Removido
+    # Depuração: Verificar se o campo de consulta está presente
+    try:
+        consulta_nome_cliente = driver.find_element(By.ID, "consultaNomeCliente")
+    except Exception as e:
+        print(f"Erro ao encontrar o campo de consulta de cliente: {e}")
+        driver.quit()
+        return
+    
+    # Depuração: Verificar se o botão de consulta está presente
+    try:
+        botao_consultar = driver.find_element(By.XPATH, "//button[@onclick=\"consultarCliente()\"]")
+    except Exception as e:
+        print(f"ERRO SEILAKKK")
+        driver.quit()
+        return
+
+    botao_consultar.click()
+    time.sleep(3)
 
 def test_inserir_exercicio():
     driver.find_element(By.XPATH, "//button[@onclick=\"showSection('exercicios')\"]").click()
@@ -211,10 +369,89 @@ def test_consultar_exercicio():
             else:
                 print("Sucesso: Detalhes do exercício estão visíveis.")
                 time.sleep(2)
+
+            
+            # Editar o exercicio
+            try:
+                botao_editar = detalhes_exercicio.find_element(By.XPATH, ".//button[contains(text(), 'Editar')]")
+                botao_editar.click()
+                time.sleep(1)
+                # Interagir com os prompts (deve-se modificar para sua automação específica de prompts)
+                driver.switch_to.alert.send_keys("Teste Editar Nome Exercício")
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                print("Sucesso: exercicio editado.")
+
+            except Exception as e:
+                print(f"Erro ao editar o exercicio: {e}")
         else:
-            print("Nenhum exercício encontrado na consulta.")
+            print("Nenhum exercicio encontrado na consulta.")
     except Exception as e:
-        print(f"Erro ao interagir com os resultados da consulta de exercício: {e}")
+        print(f"ERRO -1")
+
+    #Pesquisar novamente o exercicio editado
+    # Depuração: Verificar se o campo de consulta está presente
+    try:
+        consulta_nome_exercicio = driver.find_element(By.ID, "consultaNomeExercicio")
+    except Exception as e:
+        print(f"ERRO 0")
+        driver.quit()
+        return
+    
+    # Depuração: Verificar se o botão de consulta está presente
+    try:
+        botao_consultar = driver.find_element(By.XPATH, "//button[@onclick=\"consultarExercicio()\"]")
+    except Exception as e:
+        print(f"ERRO 1")
+        driver.quit()
+        return
+    
+    botao_consultar.click()
+    time.sleep(1)
+
+    resultado_consulta = driver.find_element(By.ID, "resultadoConsultaExercicio")
+    exercicios_encontrados = resultado_consulta.find_elements(By.CLASS_NAME, "expandable")
+    
+    if exercicios_encontrados:
+        # Clicar no primeiro exercicio encontrado para expandir os detalhes
+        exercicios_encontrados[0].click()
+        time.sleep(2)
+
+    # Remover o exercicio
+    try:
+        # Re-localizar o botão de remoção para evitar "stale element reference"
+        botao_remover = driver.find_element(By.XPATH, "//div[@id='exercicio0']//button[contains(text(), 'Remover')]")
+        botao_remover.click()
+        time.sleep(1)
+        print("Sucesso: exercicio removido.")
+    except Exception as e:
+        print(f"Erro ao remover o exercicio: {e}")
+
+    #Pesquisar novamente o exercicio Removido
+    # Depuração: Verificar se o campo de consulta está presente
+    try:
+        consulta_nome_exercicio = driver.find_element(By.ID, "consultaNomeExercicio")
+    except Exception as e:
+        print(f"Erro ao encontrar o campo de consulta de exercicio: {e}")
+        driver.quit()
+        return
+    
+    # Depuração: Verificar se o botão de consulta está presente
+    try:
+        botao_consultar = driver.find_element(By.XPATH, "//button[@onclick=\"consultarExercicio()\"]")
+    except Exception as e:
+        print(f"ERRO SEILAKKK")
+        driver.quit()
+        return
+
+    botao_consultar.click()
+    time.sleep(3)
 
 def test_inserir_ficha():
     # Atualizar a página
@@ -286,10 +523,92 @@ def test_consultar_ficha():
             else:
                 print("Sucesso: Detalhes do ficha estão visíveis.")
                 time.sleep(2)
+            
+            # Editar o ficha
+            try:
+                botao_editar = detalhes_ficha.find_element(By.XPATH, ".//button[contains(text(), 'Editar')]")
+                botao_editar.click()
+                time.sleep(1)
+                # Interagir com os prompts (deve-se modificar para sua automação específica de prompts)
+                driver.switch_to.alert.send_keys("Teste Editar Nome ficha")
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                driver.switch_to.alert.accept()
+                time.sleep(1)
+                print("Sucesso: ficha editado.")
+
+            except Exception as e:
+                print(f"Erro ao editar o ficha: {e}")
         else:
             print("Nenhum ficha encontrado na consulta.")
     except Exception as e:
-        print(f"Erro ao interagir com os resultados da consulta de ficha: {e}")
+        print(f"ERRO -1")
+
+    #Pesquisar novamente o ficha editado
+    # Depuração: Verificar se o campo de consulta está presente
+    try:
+        consulta_nome_ficha = driver.find_element(By.ID, "consultaClienteFicha")
+    except Exception as e:
+        print(f"ERRO 0")
+        driver.quit()
+        return
+    
+    # Depuração: Verificar se o botão de consulta está presente
+    try:
+        botao_consultar = driver.find_element(By.XPATH, "//button[@onclick=\"consultarFicha()\"]")
+    except Exception as e:
+        print(f"ERRO 1")
+        driver.quit()
+        return
+    
+    botao_consultar.click()
+    time.sleep(1)
+
+    resultado_consulta = driver.find_element(By.ID, "resultadoConsultaFicha")
+    fichas_encontrados = resultado_consulta.find_elements(By.CLASS_NAME, "expandable")
+    
+    if fichas_encontrados:
+        # Clicar no primeiro ficha encontrado para expandir os detalhes
+        fichas_encontrados[0].click()
+        time.sleep(2)
+
+    # Remover o ficha
+    try:
+        # Re-localizar o botão de remoção para evitar "stale element reference"
+        botao_remover = driver.find_element(By.XPATH, "//div[@id='ficha0']//button[contains(text(), 'Remover')]")
+        botao_remover.click()
+        time.sleep(1)
+        print("Sucesso: ficha removido.")
+    except Exception as e:
+        print(f"Erro ao remover o ficha: {e}")
+
+    #Pesquisar novamente o ficha Removido
+    # Depuração: Verificar se o campo de consulta está presente
+    try:
+        consulta_nome_ficha = driver.find_element(By.ID, "consultaClienteFicha")
+    except Exception as e:
+        print(f"Erro ao encontrar o campo de consulta de ficha: {e}")
+        driver.quit()
+        return
+    
+    # Depuração: Verificar se o botão de consulta está presente
+    try:
+        botao_consultar = driver.find_element(By.XPATH, "//button[@onclick=\"consultarFicha()\"]")
+    except Exception as e:
+        print(f"ERRO SEILAKKK")
+        driver.quit()
+        return
+
+    botao_consultar.click()
+    time.sleep(3)
 
 # Executando os testes
 try:
