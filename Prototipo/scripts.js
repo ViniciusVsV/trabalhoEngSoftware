@@ -158,11 +158,6 @@ function removerCliente(index) {
     consultarCliente();
 }
 
-function toggleDetails(elementId) {
-    const element = document.getElementById(elementId);
-    element.classList.toggle('hidden');
-}
-
 function inserirExercicio() {
     const nome = document.getElementById('nomeExercicio').value;
     const descricao = document.getElementById('descricaoExercicio').value;
@@ -233,3 +228,140 @@ function removerExercicio(index) {
     localStorage.setItem('exercicios', JSON.stringify(exercicios));
     consultarExercicio();
 }
+
+function inserirFicha() {
+    // Obtenha os valores do formulário
+    const clienteFicha = document.getElementById('clienteFicha').value;
+    const tipoTreinoFicha = document.getElementById('tipoTreinoFicha').value;
+    const dataInicioFicha = document.getElementById('dataInicioFicha').value;
+    const objetivosFicha = document.getElementById('objetivosFicha').value;
+    const exerciciosFicha = Array.from(document.getElementById('exerciciosFicha').selectedOptions).map(option => option.value);
+    const tipoPlanoFicha = document.getElementById('tipoPlanoFicha').value;
+
+    // Crie um objeto de ficha de treino
+    const ficha = {
+        cliente: clienteFicha,
+        tipoTreino: tipoTreinoFicha,
+        dataInicio: dataInicioFicha,
+        objetivos: objetivosFicha,
+        exercicios: exerciciosFicha,
+        tipoPlano: tipoPlanoFicha
+    };
+
+    // Obtenha as fichas do localStorage
+    let fichas = JSON.parse(localStorage.getItem('fichas')) || [];
+
+    // Adicione a nova ficha à lista
+    fichas.push(ficha);
+
+    // Salve a lista atualizada no localStorage
+    localStorage.setItem('fichas', JSON.stringify(fichas));
+
+    // Mostre uma mensagem de sucesso ou atualize a interface conforme necessário
+    alert('Ficha de treino inserida com sucesso!');
+
+    // Limpe o formulário
+    document.getElementById('inserirFichaForm').reset();
+
+    // Esconda o formulário após a inserção
+    document.getElementById('formInserirFicha').classList.add('hidden');
+}
+
+
+function consultarFicha() {
+    const clienteConsulta = document.getElementById('consultaClienteFicha').value;
+
+    // Obtenha as fichas do localStorage
+    const fichas = JSON.parse(localStorage.getItem('fichas')) || [];
+
+    // Filtre as fichas pelo cliente selecionado
+    const fichasFiltradas = clienteConsulta ? fichas.filter(ficha => ficha.cliente === clienteConsulta) : fichas;
+
+    // Exiba as fichas filtradas
+    const resultadoConsultaFicha = document.getElementById('resultadoConsultaFicha');
+    resultadoConsultaFicha.innerHTML = '';
+
+    if (fichasFiltradas.length === 0) {
+        resultadoConsultaFicha.innerHTML = '<p>Nenhuma ficha encontrada.</p>';
+    } else {
+        let resultadoHtml = "<h4>Resultados da Consulta:</h4>";
+        if (fichasFiltradas.length > 0) {
+            resultadoHtml += "<ul>";
+            fichasFiltradas.forEach((ficha, index) => {
+                resultadoHtml += `<li class="expandable" onclick="toggleDetails('ficha${index}')">${ficha.cliente} - ${ficha.tipoTreino}</li>
+                <div id="ficha${index}" class="details hidden">
+                    <p>Cliente: ${ficha.cliente}</p>
+                    <p>Tipo de Treino: ${ficha.tipoTreino}</p>
+                    <p>Data de Início: ${ficha.dataInicio}</p>
+                    <p>Objetivos: ${ficha.objetivos}</p>
+                    <p>Exercícios: ${ficha.exercicios.join(', ')}</p>
+                    <p>Tipo de Plano: ${ficha.tipoPlano}</p>
+                    <button onclick="editarFicha(${index})">Editar</button>
+                    <button onclick="removerFicha(${index})">Remover</button>
+                </div>`;
+            });
+            resultadoHtml += "</ul>";
+        } else {
+            resultadoHtml += "<p>Nenhuma ficha encontrada.</p>";
+        }
+
+        resultadoConsultaFicha.innerHTML = resultadoHtml;
+    }
+}
+
+function editarFicha(index) {
+    const fichas = JSON.parse(localStorage.getItem('fichas'));
+    const ficha = fichas[index];
+
+    const cliente = prompt('Cliente:', ficha.cliente);
+    const tipoTreino = prompt('Tipo de Treino:', ficha.tipoTreino);
+    const dataInicio = prompt('Data de Início:', ficha.dataInicio);
+    const objetivos = prompt('Objetivos:', ficha.objetivos);
+    const exercicios = prompt('Exercícios:', ficha.exercicios.join(', ')).split(',').map(e => e.trim());
+    const tipoPlano = prompt('Tipo de Plano:', ficha.tipoPlano);
+
+    if (cliente && tipoTreino && dataInicio && objetivos && exercicios && tipoPlano) {
+        fichas[index] = { cliente, tipoTreino, dataInicio, objetivos, exercicios, tipoPlano };
+        localStorage.setItem('fichas', JSON.stringify(fichas));
+        consultarFicha();
+    }
+}
+
+function removerFicha(index) {
+    const fichas = JSON.parse(localStorage.getItem('fichas'));
+    fichas.splice(index, 1);
+    localStorage.setItem('fichas', JSON.stringify(fichas));
+    consultarFicha();
+}
+
+function toggleDetails(elementId) {
+    const element = document.getElementById(elementId);
+    element.classList.toggle('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const clienteFichaSelect = document.getElementById('clienteFicha');
+    const consultaClienteFichaSelect = document.getElementById('consultaClienteFicha');
+    const exerciciosFichaSelect = document.getElementById('exerciciosFicha');
+
+    let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+    clientes.forEach(cliente => {
+        const option = document.createElement('option');
+        option.value = cliente.nome;
+        option.textContent = cliente.nome;
+        clienteFichaSelect.appendChild(option);
+
+        const consultaOption = document.createElement('option');
+        consultaOption.value = cliente.nome;
+        consultaOption.textContent = cliente.nome;
+        consultaClienteFichaSelect.appendChild(consultaOption);
+    });
+
+    let exercicios = JSON.parse(localStorage.getItem('exercicios')) || [];
+    exercicios.forEach(exercicio => {
+        const option = document.createElement('option');
+        option.value = exercicio.nome;
+        option.textContent = exercicio.nome;
+        exerciciosFichaSelect.appendChild(option);
+    });
+});

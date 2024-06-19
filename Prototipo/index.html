@@ -14,8 +14,10 @@
         <button onclick="showSection('usuarios')">Usuários</button>
         <button onclick="showSection('clientes')">Clientes</button>
         <button onclick="showSection('exercicios')">Exercícios</button>
+        <button onclick="showSection('fichas')">Fichas de Treino</button>
     </nav>
     <main>
+        <!-- Seção Usuários -->
         <section id="usuarios" class="hidden">
             <h2>Gerenciamento de Usuários</h2>
             <button onclick="showForm('formInserirUsuario')">Inserir Usuário</button>
@@ -57,6 +59,7 @@
                 <div id="resultadoConsultaUsuario"></div>
             </div>
         </section>
+        <!-- Seção Clientes -->
         <section id="clientes" class="hidden">
             <h2>Gerenciamento de Clientes</h2>
             <button onclick="showForm('formInserirCliente')">Inserir Cliente</button>
@@ -113,6 +116,7 @@
                 <div id="resultadoConsultaCliente"></div>
             </div>
         </section>
+        <!-- Seção Exercícios -->
         <section id="exercicios" class="hidden">
             <h2>Gerenciamento de Exercícios</h2>
             <button onclick="showForm('formInserirExercicio')">Inserir Exercício</button>
@@ -171,7 +175,56 @@
                 <div id="resultadoConsultaExercicio"></div>
             </div>
         </section>
-    </main>
+        <!-- Seção Fichas de Treino -->
+        <section id="fichas" class="hidden">
+            <h2>Gerenciamento de Fichas de Treino</h2>
+            <button onclick="showForm('formInserirFicha')">Inserir Ficha de Treino</button>
+            <button onclick="showForm('formConsultarFicha')">Consultar Ficha de Treino</button>
+            <div id="formInserirFicha" class="form-container hidden">
+                <h3>Inserir Ficha de Treino</h3>
+                <form id="inserirFichaForm" onsubmit="inserirFicha(); return false;">
+                    <label for="clienteFicha">Cliente:</label>
+                    <select id="clienteFicha" name="cliente" required>
+                        <!-- Lista de clientes cadastrados -->
+                    </select>
+                    <label for="tipoTreinoFicha">Tipo de Treino:</label>
+                    <select id="tipoTreinoFicha" name="tipoTreino" required>
+                        <option value="Personalizado">Personalizado</option>
+                        <option value="Geral">Geral</option>
+                    </select>
+                    <label for="dataInicioFicha">Data de Início:</label>
+                    <input type="date" id="dataInicioFicha" name="dataInicio" required>
+                    <label for="objetivosFicha">Objetivos:</label>
+                    <select id="objetivosFicha" name="objetivos" required>
+                        <option value="Perda de peso">Perda de peso</option>
+                        <option value="Ganho de massa">Ganho de massa</option>
+                        <option value="Saúde">Saúde</option>
+                    </select>
+                    <label for="exerciciosFicha">Exercícios:</label>
+                    <select id="exerciciosFicha" name="exercicios" multiple required>
+                        <!-- Lista de exercícios cadastrados -->
+                    </select>
+                    <label for="tipoPlanoFicha">Tipo de Plano:</label>
+                    <select id="tipoPlanoFicha" name="tipoPlano" required>
+                        <option value="Premium">Premium</option>
+                        <option value="Avançado">Avançado</option>
+                        <option value="Padrão">Padrão</option>
+                    </select>
+                    <button type="submit">Inserir</button>
+                </form>
+            </div>
+            <div id="formConsultarFicha" class="form-container hidden">
+                <h3>Consultar Ficha de Treino</h3>
+                <form id="consultarFichaForm">
+                    <label for="consultaClienteFicha">Cliente:</label>
+                    <select id="consultaClienteFicha" name="cliente">
+                        <!-- Lista de clientes cadastrados -->
+                    </select>
+                    <button type="button" onclick="consultarFicha()">Consultar</button>
+                </form>
+                <div id="resultadoConsultaFicha"></div>
+            </div>
+        </section>
     </main>
     <script src="scripts.js"></script>
 </body>
