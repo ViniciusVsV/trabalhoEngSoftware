@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Acessos</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #333;
+            color: white;
+        }
+        .vip-percentage {
+            cursor: pointer;
+            text-decoration: underline;
+            color: white;
+        }
+        .percentages-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        .percentage-item {
+            text-align: center;
+            width: 80px; /* Ajuste o valor conforme necessário */
+        }
+        .form-container {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Relatório de Acessos</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <label for="period">Selecione o Período:</label>
+            <select id="period">
+                <option value="0">Janeiro</option>
+                <option value="1">Fevereiro</option>
+                <option value="2">Março</option>
+                <option value="3">Abril</option>
+                <option value="4">Maio</option>
+                <option value="5">Junho</option>
+                <option value="6">Julho</option>
+                <option value="7">Agosto</option>
+                <option value="8">Setembro</option>
+                <option value="9">Outubro</option>
+                <option value="10">Novembro</option>
+                <option value="11">Dezembro</option>
+            </select>
+
+            <label for="year">Selecione o Ano:</label>
+            <select id="year">
+                <option value="2024">2024</option>
+                <!-- Pode adicionar mais opções de ano se necessário -->
+            </select>
+            <button type="submit" onclick="generateReport()">Gerar Relatório</button>
+        </div>
+        <div>
+            <canvas id="accessChart" width="600" height="200"></canvas>
+        </div>
+        <div id="percentages" class="percentages-container">
+            <!-- Porcentagens serão geradas dinamicamente -->
+        </div>
+    </main>
+
+    <script>
+        // Banco de dados fictício
+        const accessDatabase = {
+            "2024": {
+                "0": {
+                    "regular": [100, 80, 50, 130, 20],
+                    "vip": [10, 5, 3, 15, 2]
+                },
+                "1": {
+                    "regular": [110, 70, 60, 140, 30],
+                    "vip": [12, 6, 4, 17, 3]
+                },
+                "2": {
+                    "regular": [120, 90, 60, 150, 30],
+                    "vip": [15, 8, 5, 20, 4]
+                },
+                "3": {
+                    "regular": [130, 100, 70, 160, 40],
+                    "vip": [17, 9, 6, 22, 5]
+                },
+                "4": {
+                    "regular": [140, 110, 80, 170, 50],
+                    "vip": [20, 10, 7, 25, 6]
+                },
+                "5": {
+                    "regular": [150, 120, 90, 180, 60],
+                    "vip": [22, 11, 8, 27, 7]
+                },
+                "6": {
+                    "regular": [160, 130, 100, 190, 70],
+                    "vip": [25, 12, 9, 30, 8]
+                },
+                "7": {
+                    "regular": [170, 140, 110, 200, 80],
+                    "vip": [27, 13, 10, 32, 9]
+                },
+                "8": {
+                    "regular": [180, 150, 120, 210, 90],
+                    "vip": [30, 14, 11, 35, 10]
+                },
+                "9": {
+                    "regular": [190, 160, 130, 220, 100],
+                    "vip": [32, 15, 12, 37, 11]
+                },
+                "10": {
+                    "regular": [200, 170, 140, 230, 110],
+                    "vip": [35, 16, 13, 40, 12]
+                },
+                "11": {
+                    "regular": [210, 180, 150, 240, 120],
+                    "vip": [37, 17, 14, 42, 13]
+                }
+            }
+        };
+
+        let accessChart;
+
+        function generateReport() {
+            const period = document.getElementById('period').value;
+            const year = document.getElementById('year').value;
+            const accessDataForPeriod = accessDatabase[year][period];
+
+            const accessData = {
+                labels: ['Área de Peso Livre', 'Sala de Cardio', 'Piscina', 'Sala de Yoga', 'Quadra de Squash'],
+                datasets: [
+                    {
+                        label: 'Número de Acessos',
+                        data: accessDataForPeriod.regular,
+                        backgroundColor: 'rgba(192, 57, 43, 0.8)',
+                        borderColor: 'rgba(192, 57, 43, 1)',
+                        borderWidth: 1,
+                        barThickness: 20 // Ajuste da grossura das barras
+                    },
+                    {
+                        label: 'Número de Acessos VIP',
+                        data: accessDataForPeriod.vip,
+                        backgroundColor: 'rgba(41, 128, 185, 0.8)',
+                        borderColor: 'rgba(41, 128, 185, 1)',
+                        borderWidth: 1,
+                        barThickness: 20 // Ajuste da grossura das barras
+                    }
+                ]
+            };
+
+            const ctx = document.getElementById('accessChart').getContext('2d');
+            if (accessChart) {
+                accessChart.destroy();
+            }
+            accessChart = new Chart(ctx, {
+                type: 'bar',
+                data: accessData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: 'white' // Cor branca para os números do eixo Y
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: 'white' // Cor branca para os rótulos do eixo X
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'white' // Cor branca para a legenda
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gerar porcentagens
+            const percentagesContainer = document.getElementById('percentages');
+            percentagesContainer.innerHTML = ''; // Limpar conteúdo anterior
+            accessData.labels.forEach((label, index) => {
+                const total = accessDataForPeriod.regular[index] + accessDataForPeriod.vip[index];
+                const vipPercentage = ((accessDataForPeriod.vip[index] / total) * 100).toFixed(2);
+                const percentageElement = document.createElement('div');
+                percentageElement.className = 'percentage-item';
+                percentageElement.innerHTML = `
+                    <span class="vip-percentage" title="Proporção de clientes VIP: ${vipPercentage}%">${vipPercentage}%</span>
+                `;
+                percentagesContainer.appendChild(percentageElement);
+            });
+        }
+
+        
+    </script>
+</body>
+</html>
