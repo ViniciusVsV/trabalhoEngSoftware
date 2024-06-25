@@ -6,7 +6,7 @@ import time
 driver = webdriver.Chrome()
 
 # Carregar a página inicial
-driver.get("file:///C:/Users/vini1/OneDrive/%C3%81rea%20de%20Trabalho/engSoft/trabalhoEngSoftware/Prototipo/index.html")  # Atualize o caminho para o arquivo local
+driver.get("file:///C:/VsCode/Eng.%20Software%20I/trabalhoEngSoftware/Prototipo/index.html")  # Atualize o caminho para o arquivo local
 
 def test_navegacao_secao():
     seções = ['usuarios', 'clientes', 'exercicios', 'fichas']
@@ -454,6 +454,50 @@ def test_consultar_exercicio():
     time.sleep(3)
 
 def test_inserir_ficha():
+    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('clientes')\"]").click()
+    driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formInserirCliente')\"]").click()
+    time.sleep(1)
+
+    driver.find_element(By.ID, "nomeCliente").send_keys("Teste Cliente")
+    driver.find_element(By.ID, "dataNascimentoCliente").send_keys("20/10/2002")
+    driver.find_element(By.ID, "enderecoCliente").send_keys("teste endereço")
+    driver.find_element(By.ID, "telefoneCliente").send_keys("(31 98986-4176)")
+    driver.find_element(By.ID, "emailCliente").send_keys("cliente@teste.com")
+    driver.find_element(By.ID, "inserirClienteForm").submit()
+
+    # Esperar pelo alerta
+    time.sleep(1)
+    
+    # Lidar com o alerta
+    alert = driver.switch_to.alert
+    alert_text = alert.text
+    alert.accept()
+    
+    # Verificar se o alerta tinha a mensagem esperada
+    assert alert_text == "Cliente inserido com sucesso!", f"Alerta inesperado: {alert_text}"
+
+    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('exercicios')\"]").click()
+    driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formInserirExercicio')\"]").click()
+    time.sleep(1)
+
+    driver.find_element(By.ID, "nomeExercicio").send_keys("Teste Exercício")
+    driver.find_element(By.ID, "descricaoExercicio").send_keys("Descrição do exercício de teste")
+    driver.find_element(By.ID, "efeitoExercicio").send_keys("Peito")
+    driver.find_element(By.ID, "nivelExercicio").send_keys("Iniciante")
+    driver.find_element(By.ID, "inserirExercicioForm").submit()
+
+    # Esperar pelo alerta
+    time.sleep(1)
+    
+    # Lidar com o alerta
+    alert = driver.switch_to.alert
+    alert_text = alert.text
+    alert.accept()
+    
+    # Verificar se o alerta tinha a mensagem esperada
+    assert alert_text == "Exercício inserido com sucesso!", f"Alerta inesperado: {alert_text}"
+    
+
     # Atualizar a página
     driver.refresh()
 
@@ -530,9 +574,9 @@ def test_consultar_ficha():
                 botao_editar.click()
                 time.sleep(1)
                 # Interagir com os prompts (deve-se modificar para sua automação específica de prompts)
-                driver.switch_to.alert.send_keys("Teste Editar Nome ficha")
                 driver.switch_to.alert.accept()
                 time.sleep(1)
+                driver.switch_to.alert.send_keys("Geral")                
                 driver.switch_to.alert.accept()
                 time.sleep(1)
                 driver.switch_to.alert.accept()
