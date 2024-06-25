@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Usuários</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <h1>Gerenciamento de Usuários</h1>
+    </header>
+    <nav>
+        <button onclick="window.location.href='../index.html'">Voltar</button>
+    </nav>
+    <section id="usuarios">
+        <h2>Gerenciamento de Usuários</h2>
+        <button onclick="showForm('formInserirUsuario')">Inserir Usuário</button>
+        <button onclick="showForm('formConsultarUsuario')">Consultar Usuário</button>
+        <div id="formInserirUsuario" class="form-container hidden">
+            <h3>Inserir Usuário</h3>
+            <form id="inserirUsuarioForm" onsubmit="inserirUsuario(); return false;">
+                <label for="nomeUsuario">Nome:</label>
+                <input type="text" id="nomeUsuario" name="nome" required>
+                <label for="nivelAcesso">Nível de Acesso:</label>
+                <select id="nivelAcesso" name="nivelAcesso" required>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Treinador">Treinador</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Atendente">Atendente</option>
+                    <option value="Cliente">Cliente</option>
+                </select>
+                <label for="senhaUsuario">Senha:</label>
+                <input type="password" id="senhaUsuario" name="senha" required minlength="5" maxlength="10">
+                <button type="submit">Inserir</button>
+            </form>
+        </div>
+        <div id="formConsultarUsuario" class="form-container hidden">
+            <h3>Consultar Usuário</h3>
+            <form id="consultarUsuarioForm">
+                <label for="consultaNomeUsuario">Nome:</label>
+                <input type="text" id="consultaNomeUsuario" name="nome">
+                <label for="consultaNivelAcesso">Nível de Acesso:</label>
+                <select id="consultaNivelAcesso" name="nivelAcesso">
+                    <option value="">Todos</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Treinador">Treinador</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Atendente">Atendente</option>
+                    <option value="Cliente">Cliente</option>
+                </select>
+                <button type="button" onclick="consultarUsuario()">Consultar</button>
+            </form>
+            <div id="resultadoConsultaUsuario"></div>
+        </div>
+    </section>
+    <script src="../scripts.js"></script>
+</body>
+</html>

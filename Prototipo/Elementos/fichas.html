@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fichas de Treino</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <h1>Fichas de Treino</h1>
+    </header>
+    <nav>
+        <button onclick="window.location.href='../index.html'">Voltar</button>
+    </nav>
+    <section id="fichas">
+        <h2>Gerenciamento de Fichas de Treino</h2>
+        <button onclick="showForm('formInserirFicha')">Inserir Ficha de Treino</button>
+        <button onclick="showForm('formConsultarFicha')">Consultar Ficha de Treino</button>
+        <div id="formInserirFicha" class="form-container hidden">
+            <h3>Inserir Ficha de Treino</h3>
+            <form id="inserirFichaForm" onsubmit="inserirFicha(); return false;">
+                <label for="clienteFicha">Cliente:</label>
+                <select id="clienteFicha" name="cliente" required>
+                    <!-- Lista de clientes cadastrados -->
+                </select>
+                <label for="tipoTreinoFicha">Tipo de Treino:</label>
+                <select id="tipoTreinoFicha" name="tipoTreino" required>
+                    <option value="Personalizado">Personalizado</option>
+                    <option value="Geral">Geral</option>
+                </select>
+                <label for="dataInicioFicha">Data de Início:</label>
+                <input type="date" id="dataInicioFicha" name="dataInicio" required>
+                <label for="objetivosFicha">Objetivos:</label>
+                <select id="objetivosFicha" name="objetivos" required>
+                    <option value="Perda de peso">Perda de peso</option>
+                    <option value="Ganho de massa">Ganho de massa</option>
+                    <option value="Saúde">Saúde</option>
+                </select>
+                <label for="exerciciosFicha">Exercícios:</label>
+                <select id="exerciciosFicha" name="exercicios" multiple required>
+                    <!-- Lista de exercícios cadastrados -->
+                </select>
+                <label for="tipoPlanoFicha">Tipo de Plano:</label>
+                <select id="tipoPlanoFicha" name="tipoPlano" required>
+                    <option value="Premium">Premium</option>
+                    <option value="Avançado">Avançado</option>
+                    <option value="Padrão">Padrão</option>
+                </select>
+                <button type="submit">Inserir</button>
+            </form>
+        </div>
+        <div id="formConsultarFicha" class="form-container hidden">
+            <h3>Consultar Ficha de Treino</h3>
+            <form id="consultarFichaForm">
+                <label for="consultaClienteFicha">Cliente:</label>
+                <select id="consultaClienteFicha" name="cliente">
+                    <!-- Lista de clientes cadastrados -->
+                </select>
+                <button type="button" onclick="consultarFicha()">Consultar</button>
+            </form>
+            <div id="resultadoConsultaFicha"></div>
+        </div>
+    </section>
+    <script src="../scripts.js"></script>
+</body>
+</html>
