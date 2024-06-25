@@ -37,23 +37,30 @@ function consultarUsuario() {
 
     let resultadoHtml = "<h4>Resultados da Consulta:</h4>";
     if (resultados.length > 0) {
-        resultadoHtml += "<ul>";
+        resultadoHtml += "<div class='grid-container'>";
         resultados.forEach((usuario, index) => {
-            resultadoHtml += `<li class="expandable" onclick="toggleDetails('usuario${index}')">${usuario.nome} - ${usuario.nivelAcesso}</li>
-            <div id="usuario${index}" class="details hidden">
-                <p>Nome: ${usuario.nome}</p>
-                <p>Nível de Acesso: ${usuario.nivelAcesso}</p>
-                <p>Senha: ${usuario.senha}</p>
-                <button onclick="editarUsuario(${index})">Editar</button>
-                <button onclick="removerUsuario(${index})">Remover</button>
+            resultadoHtml += `<div class="grid-item expandable" onclick="toggleDetails('usuario${index}')">
+                <p>${usuario.nome} - ${usuario.nivelAcesso}</p>
+                <div id="usuario${index}" class="details hidden">
+                    <p>Nome: ${usuario.nome}</p>
+                    <p>Nível de Acesso: ${usuario.nivelAcesso}</p>
+                    <p>Senha: ${usuario.senha}</p>
+                    <button onclick="editarUsuario(${index})">Editar</button>
+                    <button onclick="removerUsuario(${index})">Remover</button>
+                </div>
             </div>`;
         });
-        resultadoHtml += "</ul>";
+        resultadoHtml += "</div>";
     } else {
         resultadoHtml += "<p>Nenhum usuário encontrado.</p>";
     }
 
     document.getElementById('resultadoConsultaUsuario').innerHTML = resultadoHtml;
+}
+
+function toggleDetails(id) {
+    const element = document.getElementById(id);
+    element.classList.toggle('hidden');
 }
 
 function editarUsuario(index) {
@@ -109,28 +116,31 @@ function consultarCliente() {
 
     let resultadoHtml = "<h4>Resultados da Consulta:</h4>";
     if (resultados.length > 0) {
-        resultadoHtml += "<ul>";
+        resultadoHtml += "<div class='grid-container'>";
         resultados.forEach((cliente, index) => {
-            resultadoHtml += `<li class="expandable" onclick="toggleDetails('cliente${index}')">${cliente.nome} - ${cliente.tipoPlano} - ${cliente.status}</li>
-            <div id="cliente${index}" class="details hidden">
-                <p>Nome: ${cliente.nome}</p>
-                <p>Data de Nascimento: ${cliente.dataNascimento}</p>
-                <p>Endereço: ${cliente.endereco}</p>
-                <p>Telefone: ${cliente.telefone}</p>
-                <p>Email: ${cliente.email}</p>
-                <p>Tipo de Plano: ${cliente.tipoPlano}</p>
-                <p>Status: ${cliente.status}</p>
-                <button onclick="editarCliente(${index})">Editar</button>
-                <button onclick="removerCliente(${index})">Remover</button>
+            resultadoHtml += `<div class="grid-item expandable" onclick="toggleDetails('cliente${index}')">
+                <p>${cliente.nome} - ${cliente.tipoPlano} - ${cliente.status}</p>
+                <div id="cliente${index}" class="details hidden">
+                    <p>Nome: ${cliente.nome}</p>
+                    <p>Data de Nascimento: ${cliente.dataNascimento}</p>
+                    <p>Endereço: ${cliente.endereco}</p>
+                    <p>Telefone: ${cliente.telefone}</p>
+                    <p>Email: ${cliente.email}</p>
+                    <p>Tipo de Plano: ${cliente.tipoPlano}</p>
+                    <p>Status: ${cliente.status}</p>
+                    <button onclick="editarCliente(${index})">Editar</button>
+                    <button onclick="removerCliente(${index})">Remover</button>
+                </div>
             </div>`;
         });
-        resultadoHtml += "</ul>";
+        resultadoHtml += "</div>";
     } else {
         resultadoHtml += "<p>Nenhum cliente encontrado.</p>";
     }
 
     document.getElementById('resultadoConsultaCliente').innerHTML = resultadoHtml;
 }
+
 
 function editarCliente(index) {
     const clientes = JSON.parse(localStorage.getItem('clientes'));
@@ -186,25 +196,28 @@ function consultarExercicio() {
 
     let resultadoHtml = "<h4>Resultados da Consulta:</h4>";
     if (resultados.length > 0) {
-        resultadoHtml += "<ul>";
+        resultadoHtml += "<div class='grid-container'>";
         resultados.forEach((exercicio, index) => {
-            resultadoHtml += `<li class="expandable" onclick="toggleDetails('exercicio${index}')">${exercicio.nome} - ${exercicio.efeito.join(', ')} - ${exercicio.nivel}</li>
-            <div id="exercicio${index}" class="details hidden">
-                <p>Nome: ${exercicio.nome}</p>
-                <p>Descrição: ${exercicio.descricao}</p>
-                <p>Efeito: ${exercicio.efeito.join(', ')}</p>
-                <p>Nível: ${exercicio.nivel}</p>
-                <button onclick="editarExercicio(${index})">Editar</button>
-                <button onclick="removerExercicio(${index})">Remover</button>
+            resultadoHtml += `<div class="grid-item expandable" onclick="toggleDetails('exercicio${index}')">
+                <p>${exercicio.nome} - ${exercicio.efeito.join(', ')} - ${exercicio.nivel}</p>
+                <div id="exercicio${index}" class="details hidden">
+                    <p>Nome: ${exercicio.nome}</p>
+                    <p>Descrição: ${exercicio.descricao}</p>
+                    <p>Efeito: ${exercicio.efeito.join(', ')}</p>
+                    <p>Nível: ${exercicio.nivel}</p>
+                    <button onclick="editarExercicio(${index})">Editar</button>
+                    <button onclick="removerExercicio(${index})">Remover</button>
+                </div>
             </div>`;
         });
-        resultadoHtml += "</ul>";
+        resultadoHtml += "</div>";
     } else {
         resultadoHtml += "<p>Nenhum exercício encontrado.</p>";
     }
 
     document.getElementById('resultadoConsultaExercicio').innerHTML = resultadoHtml;
 }
+
 
 function editarExercicio(index) {
     const exercicios = JSON.parse(localStorage.getItem('exercicios'));
@@ -286,21 +299,23 @@ function consultarFicha() {
     } else {
         let resultadoHtml = "<h4>Resultados da Consulta:</h4>";
         if (fichasFiltradas.length > 0) {
-            resultadoHtml += "<ul>";
+            resultadoHtml += "<div class='grid-container'>";
             fichasFiltradas.forEach((ficha, index) => {
-                resultadoHtml += `<li class="expandable" onclick="toggleDetails('ficha${index}')">${ficha.cliente} - ${ficha.tipoTreino}</li>
-                <div id="ficha${index}" class="details hidden">
-                    <p>Cliente: ${ficha.cliente}</p>
-                    <p>Tipo de Treino: ${ficha.tipoTreino}</p>
-                    <p>Data de Início: ${ficha.dataInicio}</p>
-                    <p>Objetivos: ${ficha.objetivos}</p>
-                    <p>Exercícios: ${ficha.exercicios.join(', ')}</p>
-                    <p>Tipo de Plano: ${ficha.tipoPlano}</p>
-                    <button onclick="editarFicha(${index})">Editar</button>
-                    <button onclick="removerFicha(${index})">Remover</button>
+                resultadoHtml += `<div class="grid-item expandable" onclick="toggleDetails('ficha${index}')">
+                    <p>${ficha.cliente} - ${ficha.tipoTreino}</p>
+                    <div id="ficha${index}" class="details hidden">
+                        <p>Cliente: ${ficha.cliente}</p>
+                        <p>Tipo de Treino: ${ficha.tipoTreino}</p>
+                        <p>Data de Início: ${ficha.dataInicio}</p>
+                        <p>Objetivos: ${ficha.objetivos}</p>
+                        <p>Exercícios: ${ficha.exercicios.join(', ')}</p>
+                        <p>Tipo de Plano: ${ficha.tipoPlano}</p>
+                        <button onclick="editarFicha(${index})">Editar</button>
+                        <button onclick="removerFicha(${index})">Remover</button>
+                    </div>
                 </div>`;
             });
-            resultadoHtml += "</ul>";
+            resultadoHtml += "</div>";
         } else {
             resultadoHtml += "<p>Nenhuma ficha encontrada.</p>";
         }
@@ -308,6 +323,7 @@ function consultarFicha() {
         resultadoConsultaFicha.innerHTML = resultadoHtml;
     }
 }
+
 
 function editarFicha(index) {
     const fichas = JSON.parse(localStorage.getItem('fichas'));

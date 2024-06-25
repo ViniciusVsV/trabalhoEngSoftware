@@ -5,17 +5,20 @@ body {
     margin: 0;
     padding: 0;
 }
+
 header {
     background-color: #c0392b;
     padding: 20px;
     text-align: center;
 }
+
 nav {
     display: flex;
     justify-content: center;
     background-color: #444;
     padding: 10px;
 }
+
 nav button {
     background-color: #c0392b;
     color: #fff;
@@ -25,25 +28,31 @@ nav button {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 nav button:hover {
     background-color: #e74c3c;
 }
+
 main {
     padding: 20px;
 }
+
 .hidden {
     display: none;
 }
+
 .form-container {
     background-color: #555;
     padding: 20px;
     margin-top: 20px;
     border-radius: 8px;
 }
+
 label {
     display: block;
     margin-top: 10px;
 }
+
 input, select, button[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -51,24 +60,29 @@ input, select, button[type="submit"] {
     border: none;
     border-radius: 4px;
 }
+
 button[type="submit"] {
     background-color: #c0392b;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 button[type="submit"]:hover {
     background-color: #e74c3c;
 }
+
 .expandable {
     cursor: pointer;
 }
+
 .details {
     margin-top: 10px;
     background-color: #444;
     padding: 10px;
     border-radius: 5px;
 }
+
 .details button {
     margin-top: 10px;
     width: auto;
@@ -78,6 +92,7 @@ button[type="submit"]:hover {
     border: none;
     cursor: pointer;
 }
+
 .details button:hover {
     background-color: #e74c3c;
 }
@@ -85,4 +100,22 @@ button[type="submit"]:hover {
 select[multiple] {
     height: auto; 
     min-height: 100px; 
+}
+
+.hidden {
+    display: none;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.grid-item {
+    padding: 10px;
+    background-color: #c0392b; /* Red background color */
+    border-radius: 5px;
+    color: #fff;
 }
