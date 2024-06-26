@@ -671,8 +671,36 @@ def test_consultar_ficha():
     driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
     time.sleep(2)
 
+def test_gerar_relatorios():
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='Elementos/relatorio.html'\"]").click()
+    driver.find_element(By.XPATH, "//button[@onclick=\"showAccessReport()\"]").click()
+    time.sleep(1)
+
+    periodo_select = driver.find_element(By.ID, "period")
+    periodo_select.send_keys("Janeiro")
+    
+    ano_select = driver.find_element(By.ID, "year")
+    ano_select.send_keys("2024")
+
+    driver.find_element(By.XPATH, "//button[@onclick=\"generateReport()\"]").click()
+    time.sleep(2)
+
+    periodo_select = driver.find_element(By.ID, "period")
+    periodo_select.send_keys("Fevereiro")
+
+    driver.find_element(By.XPATH, "//button[@onclick=\"generateReport()\"]").click()
+    time.sleep(2)
+
+    driver.find_element(By.XPATH, "//button[@onclick=\"showFinancialReport()\"]").click()
+    time.sleep(1)
+
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
+    time.sleep(1)
+
+
 # Executando os testes
 try:
+    test_gerar_relatorios()
     test_navegacao_secao()
     test_inserir_usuario()
     test_consultar_usuario()
@@ -682,6 +710,8 @@ try:
     test_consultar_exercicio()
     test_inserir_ficha()
     test_consultar_ficha()
+
+    
 finally:
     # Fechando o navegador
     driver.quit()
