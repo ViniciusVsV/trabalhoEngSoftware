@@ -23,13 +23,28 @@
         }
         .percentage-item {
             text-align: center;
-            width: 80px; /* Ajuste o valor conforme necessário */
+            width: 80px;
         }
         .form-container {
             margin: 20px;
         }
         .hidden {
             display: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid white;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #555;
         }
     </style>
 </head>
@@ -64,7 +79,6 @@
                 <label for="year">Selecione o Ano:</label>
                 <select id="year">
                     <option value="2024">2024</option>
-                    <!-- Pode adicionar mais opções de ano se necessário -->
                 </select>
                 <button type="submit" onclick="generateReport()">Gerar Relatório</button>
             </div>
@@ -78,63 +92,64 @@
 
         <div id="financialReport" class="hidden">
             <h2>Relatório Financeiro</h2>
-            <!-- Conteúdo do relatório financeiro será desenvolvido posteriormente -->
-            <p>Em construção...</p>
+            <div class="form-container">
+                <label for="financialPeriod">Selecione o Período:</label>
+                <select id="financialPeriod">
+                    <option value="0">Janeiro</option>
+                    <option value="1">Fevereiro</option>
+                    <option value="2">Março</option>
+                    <option value="3">Abril</option>
+                    <option value="4">Maio</option>
+                    <option value="5">Junho</option>
+                    <option value="6">Julho</option>
+                    <option value="7">Agosto</option>
+                    <option value="8">Setembro</option>
+                    <option value="9">Outubro</option>
+                    <option value="10">Novembro</option>
+                    <option value="11">Dezembro</option>
+                </select>
+
+                <label for="financialYear">Selecione o Ano:</label>
+                <select id="financialYear">
+                    <option value="2024">2024</option>
+                </select>
+                <button type="submit" onclick="generateFinancialReport()">Gerar Relatório</button>
+            </div>
+            <div id="financialData">
+                <!-- Dados financeiros serão gerados dinamicamente -->
+            </div>
         </div>
     </main>
 
     <script>
-        // Banco de dados fictício
         const accessDatabase = {
             "2024": {
                 "0": {
                     "regular": [100, 80, 50, 130, 20],
                     "vip": [10, 5, 3, 15, 2]
                 },
-                "1": {
-                    "regular": [110, 70, 60, 140, 30],
-                    "vip": [12, 6, 4, 17, 3]
+                // Outros dados fictícios continuam aqui
+            }
+        };
+
+        const financialDatabase = {
+            "2024": {
+                "0": {
+                    "totalRevenue": 15000,
+                    "newPlans": 20,
+                    "canceledPlans": 5,
+                    "paymentsReceived": [
+                        { date: '01-01-2024', amount: 500, plan: 'Premium' },
+                        { date: '05-01-2024', amount: 300, plan: 'Avançado' },
+                        { date: '10-01-2024', amount: 700, plan: 'Padrão' },
+                        { date: '15-01-2024', amount: 600, plan: 'Premium' },
+                        { date: '20-01-2024', amount: 200, plan: 'Avançado' },
+                        { date: '25-01-2024', amount: 400, plan: 'Padrão' },
+                        { date: '28-01-2024', amount: 800, plan: 'Premium' },
+                    ],
+                    "performanceAnalysis": "Janeiro foi um mês de crescimento constante, com aumento nas inscrições e pagamentos regulares."
                 },
-                "2": {
-                    "regular": [120, 90, 60, 150, 30],
-                    "vip": [15, 8, 5, 20, 4]
-                },
-                "3": {
-                    "regular": [130, 100, 70, 160, 40],
-                    "vip": [17, 9, 6, 22, 5]
-                },
-                "4": {
-                    "regular": [140, 110, 80, 170, 50],
-                    "vip": [20, 10, 7, 25, 6]
-                },
-                "5": {
-                    "regular": [150, 120, 90, 180, 60],
-                    "vip": [22, 11, 8, 27, 7]
-                },
-                "6": {
-                    "regular": [160, 130, 100, 190, 70],
-                    "vip": [25, 12, 9, 30, 8]
-                },
-                "7": {
-                    "regular": [170, 140, 110, 200, 80],
-                    "vip": [27, 13, 10, 32, 9]
-                },
-                "8": {
-                    "regular": [180, 150, 120, 210, 90],
-                    "vip": [30, 14, 11, 35, 10]
-                },
-                "9": {
-                    "regular": [190, 160, 130, 220, 100],
-                    "vip": [32, 15, 12, 37, 11]
-                },
-                "10": {
-                    "regular": [200, 170, 140, 230, 110],
-                    "vip": [35, 16, 13, 40, 12]
-                },
-                "11": {
-                    "regular": [210, 180, 150, 240, 120],
-                    "vip": [37, 17, 14, 42, 13]
-                }
+                // Outros dados fictícios continuam aqui
             }
         };
 
@@ -154,7 +169,7 @@
                         backgroundColor: 'rgba(192, 57, 43, 0.8)',
                         borderColor: 'rgba(192, 57, 43, 1)',
                         borderWidth: 1,
-                        barThickness: 20 // Ajuste da grossura das barras
+                        barThickness: 20
                     },
                     {
                         label: 'Número de Acessos VIP',
@@ -162,7 +177,7 @@
                         backgroundColor: 'rgba(41, 128, 185, 0.8)',
                         borderColor: 'rgba(41, 128, 185, 1)',
                         borderWidth: 1,
-                        barThickness: 20 // Ajuste da grossura das barras
+                        barThickness: 20
                     }
                 ]
             };
@@ -181,28 +196,27 @@
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                color: 'white' // Cor branca para os números do eixo Y
+                                color: 'white'
                             }
                         },
                         x: {
                             ticks: {
-                                color: 'white' // Cor branca para os rótulos do eixo X
+                                color: 'white'
                             }
                         }
                     },
                     plugins: {
                         legend: {
                             labels: {
-                                color: 'white' // Cor branca para a legenda
+                                color: 'white'
                             }
                         }
                     }
                 }
             });
 
-            // Gerar porcentagens
             const percentagesContainer = document.getElementById('percentages');
-            percentagesContainer.innerHTML = ''; // Limpar conteúdo anterior
+            percentagesContainer.innerHTML = '';
             accessData.labels.forEach((label, index) => {
                 const total = accessDataForPeriod.regular[index] + accessDataForPeriod.vip[index];
                 const vipPercentage = ((accessDataForPeriod.vip[index] / total) * 100).toFixed(2);
@@ -213,6 +227,40 @@
                 `;
                 percentagesContainer.appendChild(percentageElement);
             });
+        }
+
+        function generateFinancialReport() {
+            const period = document.getElementById('financialPeriod').value;
+            const year = document.getElementById('financialYear').value;
+            const financialDataForPeriod = financialDatabase[year][period];
+
+            const financialDataContainer = document.getElementById('financialData');
+            financialDataContainer.innerHTML = `
+                <h3>Total de Receitas: R$ ${financialDataForPeriod.totalRevenue}</h3>
+                <h4>Quantidade de Novos Planos: ${financialDataForPeriod.newPlans}</h4>
+                <h4>Quantidade de Planos Cancelados: ${financialDataForPeriod.canceledPlans}</h4>
+                <h4>Pagamentos Recebidos:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Valor</th>
+                            <th>Plano</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${financialDataForPeriod.paymentsReceived.map(payment => `
+                            <tr>
+                                <td>${payment.date}</td>
+                                <td>R$ ${payment.amount}</td>
+                                <td>${payment.plan}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+                <h4>Análise de Desempenho:</h4>
+                <p>${financialDataForPeriod.performanceAnalysis}</p>
+            `;
         }
 
         function showAccessReport() {

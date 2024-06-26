@@ -6,7 +6,7 @@ import time
 driver = webdriver.Chrome()
 
 # Carregar a página inicial
-driver.get("file:///C:/VsCode/Eng.%20Software%20I/trabalhoEngSoftware/Prototipo/index.html")  # Atualize o caminho para o arquivo local
+driver.get("file:///C:/Users/vini1/OneDrive/%C3%81rea%20de%20Trabalho/engSoft/trabalhoEngSoftware/Prototipo/index.html")  # Atualize o caminho para o arquivo local
 
 def test_navegacao_secao():
     seções = ['usuarios', 'clientes', 'exercicios', 'fichas', 'relatorio']
@@ -683,16 +683,13 @@ def test_gerar_relatorios():
     ano_select.send_keys("2024")
 
     driver.find_element(By.XPATH, "//button[@onclick=\"generateReport()\"]").click()
-    time.sleep(2)
-
-    periodo_select = driver.find_element(By.ID, "period")
-    periodo_select.send_keys("Fevereiro")
-
-    driver.find_element(By.XPATH, "//button[@onclick=\"generateReport()\"]").click()
-    time.sleep(2)
+    time.sleep(5)
 
     driver.find_element(By.XPATH, "//button[@onclick=\"showFinancialReport()\"]").click()
     time.sleep(1)
+
+    driver.find_element(By.XPATH, "//button[@onclick=\"generateFinancialReport()\"]").click()
+    time.sleep(5)
 
     driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
     time.sleep(1)
@@ -700,7 +697,6 @@ def test_gerar_relatorios():
 
 # Executando os testes
 try:
-    test_gerar_relatorios()
     test_navegacao_secao()
     test_inserir_usuario()
     test_consultar_usuario()
@@ -710,6 +706,7 @@ try:
     test_consultar_exercicio()
     test_inserir_ficha()
     test_consultar_ficha()
+    test_gerar_relatorios()
 
     
 finally:
