@@ -28,45 +28,58 @@
         .form-container {
             margin: 20px;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Relatório de Acessos</h1>
+        <h1>Relatórios do Sistema</h1>
     </header>
     <nav>
         <button onclick="window.location.href='../index.html'">Voltar</button>
+        <button onclick="showAccessReport()">Relatório de Acessos</button>
+        <button onclick="showFinancialReport()">Relatório Financeiro</button>
     </nav>
     <main>
-        <div class="form-container">
-            <label for="period">Selecione o Período:</label>
-            <select id="period">
-                <option value="0">Janeiro</option>
-                <option value="1">Fevereiro</option>
-                <option value="2">Março</option>
-                <option value="3">Abril</option>
-                <option value="4">Maio</option>
-                <option value="5">Junho</option>
-                <option value="6">Julho</option>
-                <option value="7">Agosto</option>
-                <option value="8">Setembro</option>
-                <option value="9">Outubro</option>
-                <option value="10">Novembro</option>
-                <option value="11">Dezembro</option>
-            </select>
+        <div id="accessReport">
+            <div class="form-container">
+                <label for="period">Selecione o Período:</label>
+                <select id="period">
+                    <option value="0">Janeiro</option>
+                    <option value="1">Fevereiro</option>
+                    <option value="2">Março</option>
+                    <option value="3">Abril</option>
+                    <option value="4">Maio</option>
+                    <option value="5">Junho</option>
+                    <option value="6">Julho</option>
+                    <option value="7">Agosto</option>
+                    <option value="8">Setembro</option>
+                    <option value="9">Outubro</option>
+                    <option value="10">Novembro</option>
+                    <option value="11">Dezembro</option>
+                </select>
 
-            <label for="year">Selecione o Ano:</label>
-            <select id="year">
-                <option value="2024">2024</option>
-                <!-- Pode adicionar mais opções de ano se necessário -->
-            </select>
-            <button type="submit" onclick="generateReport()">Gerar Relatório</button>
+                <label for="year">Selecione o Ano:</label>
+                <select id="year">
+                    <option value="2024">2024</option>
+                    <!-- Pode adicionar mais opções de ano se necessário -->
+                </select>
+                <button type="submit" onclick="generateReport()">Gerar Relatório</button>
+            </div>
+            <div>
+                <canvas id="accessChart" width="600" height="200"></canvas>
+            </div>
+            <div id="percentages" class="percentages-container">
+                <!-- Porcentagens serão geradas dinamicamente -->
+            </div>
         </div>
-        <div>
-            <canvas id="accessChart" width="600" height="200"></canvas>
-        </div>
-        <div id="percentages" class="percentages-container">
-            <!-- Porcentagens serão geradas dinamicamente -->
+
+        <div id="financialReport" class="hidden">
+            <h2>Relatório Financeiro</h2>
+            <!-- Conteúdo do relatório financeiro será desenvolvido posteriormente -->
+            <p>Em construção...</p>
         </div>
     </main>
 
@@ -202,7 +215,15 @@
             });
         }
 
-        
+        function showAccessReport() {
+            document.getElementById('accessReport').classList.remove('hidden');
+            document.getElementById('financialReport').classList.add('hidden');
+        }
+
+        function showFinancialReport() {
+            document.getElementById('accessReport').classList.add('hidden');
+            document.getElementById('financialReport').classList.remove('hidden');
+        }
     </script>
 </body>
 </html>

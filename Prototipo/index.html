@@ -5,17 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gerenciamento da Academia</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centraliza os botões horizontalmente */
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px; /* Espaçamento entre os botões */
+        }
+        button {
+            width: 150px; /* Defina a largura baseada no maior botão */
+        }
+        .reports-button {
+            margin-top: 10px; /* Ajuste conforme necessário */
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Sistema de Gerenciamento da Academia</h1>
     </header>
     <nav>
-        <button onclick="window.location.href='Elementos/usuarios.html'">Usuários</button>
-        <button onclick="window.location.href='Elementos/clientes.html'">Clientes</button>
-        <button onclick="window.location.href='Elementos/exercicios.html'">Exercícios</button>
-        <button onclick="window.location.href='Elementos/fichas.html'">Fichas de Treino</button>
-        <button onclick="window.location.href='Elementos/relatorio.html'">Relatório</button>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='Elementos/usuarios.html'">Usuários</button>
+            <button onclick="window.location.href='Elementos/clientes.html'">Clientes</button>
+            <button onclick="window.location.href='Elementos/exercicios.html'">Exercícios</button>
+            <button onclick="window.location.href='Elementos/fichas.html'">Fichas de Treino</button>
+        </div>
+        <button class="reports-button" onclick="window.location.href='Elementos/relatorio.html'">Relatórios</button>
     </nav>
     <main id="content">
         <h2>Bem-vindo ao Sistema de Gerenciamento da Academia</h2>
