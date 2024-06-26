@@ -9,15 +9,18 @@ driver = webdriver.Chrome()
 driver.get("file:///C:/VsCode/Eng.%20Software%20I/trabalhoEngSoftware/Prototipo/index.html")  # Atualize o caminho para o arquivo local
 
 def test_navegacao_secao():
-    seções = ['usuarios', 'clientes', 'exercicios', 'fichas']
+    seções = ['usuarios', 'clientes', 'exercicios', 'fichas', 'relatorio']
+
+    time.sleep(2)
     for secao in seções:
-        botao = driver.find_element(By.XPATH, f"//button[@onclick=\"showSection('{secao}')\"]")
-        botao.click()
+        driver.find_element(By.XPATH, f"//button[@onclick=\"window.location.href='Elementos/{secao}.html'\"]").click()
         time.sleep(1)
-        assert driver.find_element(By.ID, secao).is_displayed(), f"Seção {secao} não está visível!"
+        driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
+        time.sleep(1)
 
 def test_inserir_usuario():
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('usuarios')\"]").click()
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='Elementos/usuarios.html'\"]").click()
+    time.sleep(1)
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formInserirUsuario')\"]").click()
     time.sleep(1)
 
@@ -38,7 +41,6 @@ def test_inserir_usuario():
     assert alert_text == "Usuário inserido com sucesso!", f"Alerta inesperado: {alert_text}"
 
 def test_consultar_usuario():
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('usuarios')\"]").click()
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formConsultarUsuario')\"]").click()
     time.sleep(1)
 
@@ -161,8 +163,11 @@ def test_consultar_usuario():
     botao_consultar.click()
     time.sleep(3)
 
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
+    time.sleep(2)
+
 def test_inserir_cliente():
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('clientes')\"]").click()
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='Elementos/clientes.html'\"]").click()
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formInserirCliente')\"]").click()
     time.sleep(1)
 
@@ -185,7 +190,6 @@ def test_inserir_cliente():
     assert alert_text == "Cliente inserido com sucesso!", f"Alerta inesperado: {alert_text}"
 
 def test_consultar_cliente():
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('clientes')\"]").click()
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formConsultarCliente')\"]").click()
     time.sleep(1)
 
@@ -314,8 +318,11 @@ def test_consultar_cliente():
     botao_consultar.click()
     time.sleep(3)
 
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
+    time.sleep(2)
+
 def test_inserir_exercicio():
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('exercicios')\"]").click()
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='Elementos/exercicios.html'\"]").click()
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formInserirExercicio')\"]").click()
     time.sleep(1)
 
@@ -337,7 +344,6 @@ def test_inserir_exercicio():
     assert alert_text == "Exercício inserido com sucesso!", f"Alerta inesperado: {alert_text}"
 
 def test_consultar_exercicio():
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('exercicios')\"]").click()
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formConsultarExercicio')\"]").click()
     time.sleep(1)
     
@@ -453,8 +459,11 @@ def test_consultar_exercicio():
     botao_consultar.click()
     time.sleep(3)
 
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
+    time.sleep(2)
+
 def test_inserir_ficha():
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('clientes')\"]").click()
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='Elementos/clientes.html'\"]").click()
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formInserirCliente')\"]").click()
     time.sleep(1)
 
@@ -476,7 +485,10 @@ def test_inserir_ficha():
     # Verificar se o alerta tinha a mensagem esperada
     assert alert_text == "Cliente inserido com sucesso!", f"Alerta inesperado: {alert_text}"
 
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('exercicios')\"]").click()
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
+    time.sleep(1)
+
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='Elementos/exercicios.html'\"]").click()
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formInserirExercicio')\"]").click()
     time.sleep(1)
 
@@ -496,12 +508,15 @@ def test_inserir_ficha():
     
     # Verificar se o alerta tinha a mensagem esperada
     assert alert_text == "Exercício inserido com sucesso!", f"Alerta inesperado: {alert_text}"
+
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
+    time.sleep(1)
     
 
     # Atualizar a página
     driver.refresh()
 
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('fichas')\"]").click()
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='Elementos/fichas.html'\"]").click()
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formInserirFicha')\"]").click()
     time.sleep(1)
 
@@ -525,7 +540,6 @@ def test_inserir_ficha():
     assert alert_text == "Ficha de treino inserida com sucesso!", f"Alerta inesperado: {alert_text}"
 
 def test_consultar_ficha():
-    driver.find_element(By.XPATH, "//button[@onclick=\"showSection('fichas')\"]").click()
     driver.find_element(By.XPATH, "//button[@onclick=\"showForm('formConsultarFicha')\"]").click()
     time.sleep(1)
 
@@ -653,6 +667,9 @@ def test_consultar_ficha():
 
     botao_consultar.click()
     time.sleep(3)
+
+    driver.find_element(By.XPATH, "//button[@onclick=\"window.location.href='../index.html'\"]").click()
+    time.sleep(2)
 
 # Executando os testes
 try:
